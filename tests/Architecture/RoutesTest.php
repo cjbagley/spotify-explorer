@@ -5,11 +5,12 @@ use Illuminate\Routing\Route;
 test('routes have names', function () {
     $route_name_missing = collect(app('router')->getRoutes())
         ->filter(function (Route $route) {
-            if ($route->getName() === '') {
-                return true;
+            // Laravel 'up' route for healthcheck does not have name
+            if ($route->uri() === 'up') {
+                return false;
             }
 
-            return $route->getName() === null;
+            return empty($route->getName());
         });
 
     $names = function (Route $route): string {

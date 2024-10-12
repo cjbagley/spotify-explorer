@@ -7,19 +7,27 @@ use App\Http\Middleware\HasValidSpotifyToken;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'verified', HasValidSpotifyToken::class])->group(function () {
-    Route::get('/', DashboardController::class)->name('dashboard');
+    Route::get('/', DashboardController::class)
+        ->name('dashboard');
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/authentication-required', [SpotifyAuthController::class, 'index'])->name('auth-required');
-    Route::post('/authentication-required',
-        [SpotifyAuthController::class, 'authenticate'])->name('auth-required-continue');
+    Route::get('/authentication-required', [SpotifyAuthController::class, 'index'])
+        ->name('auth-required');
+
+    Route::post('/authentication-required', [SpotifyAuthController::class, 'authenticate'])
+        ->name('auth-required-continue');
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profile', [ProfileController::class, 'edit'])
+        ->name('profile.edit');
+
+    Route::patch('/profile', [ProfileController::class, 'update'])
+        ->name('profile.update');
+
+    Route::delete('/profile', [ProfileController::class, 'destroy'])
+        ->name('profile.destroy');
 });
 
 require __DIR__.'/auth.php';
