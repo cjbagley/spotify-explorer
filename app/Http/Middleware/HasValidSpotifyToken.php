@@ -21,7 +21,7 @@ class HasValidSpotifyToken
         }
 
         if (Auth::user()->access_token === null) {
-            return redirect(route('auth-required'));
+            return redirect(route('spotify.auth.required'));
         }
 
         return $next($request);
